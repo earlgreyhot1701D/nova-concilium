@@ -165,6 +165,12 @@ us-east-1, Last 5 minutes:
   [`evidence/screenshot-b-detail-2.png`](evidence/screenshot-b-detail-2.png) —
   zoomed views with readable node labels.
 
+**Populated `.env`:**
+[`evidence/env-populated.txt`](evidence/env-populated.txt) — the project's
+populated environment file (three KB IDs, runtime ARN, guardrail ID/version), with
+the 12-digit AWS account ID inside `AGENTCORE_RUNTIME_ARN` masked as `<ACCOUNT_ID>`;
+every other value is real.
+
 **End-to-end scenarios** (`python src/agent_orchestrator.py test`) — all routed
 exactly as specified, `initialize_session` first and `route_to_communication_agent`
 last in every case:
