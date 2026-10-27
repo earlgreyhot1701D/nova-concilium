@@ -171,6 +171,29 @@ populated environment file (three KB IDs, runtime ARN, guardrail ID/version), wi
 the 12-digit AWS account ID inside `AGENTCORE_RUNTIME_ARN` masked as `<ACCOUNT_ID>`;
 every other value is real.
 
+---
+
+## Deployment evidence
+
+Additional reviewer-requested evidence of the deployed resources and live test
+run. The three `test-run-*` images are rendered from the real run log in
+[`evidence/test-run-output.txt`](evidence/test-run-output.txt) (ANSI codes
+stripped, account ID masked) and are labeled as such in their header.
+
+**AWS Console — Knowledge Bases:**
+- [`evidence/console-kb-list.png`](evidence/console-kb-list.png) — the three `novamart-*-policy-kb` Knowledge Bases listed in the Bedrock console, all ACTIVE.
+- [`evidence/console-kb-returns.png`](evidence/console-kb-returns.png) — Returns KB detail: S3 data source `policies/returns/`, Titan v2 embeddings, S3 Vectors store, synced.
+- [`evidence/console-kb-shipping.png`](evidence/console-kb-shipping.png) — Shipping KB detail: data source `policies/shipping/`, Titan v2, S3 Vectors, synced.
+- [`evidence/console-kb-warranty.png`](evidence/console-kb-warranty.png) — Warranty KB detail: data source `policies/warranty/`, Titan v2, S3 Vectors, synced.
+
+**AWS Console — AgentCore Runtime:**
+- [`evidence/console-agentcore-runtime.png`](evidence/console-agentcore-runtime.png) — the deployed `udacity_agentcore_runtime` in the AgentCore console, status READY (PUBLIC / HTTP).
+
+**Live test run** (`python src/agent_orchestrator.py test`, rendered from [`evidence/test-run-output.txt`](evidence/test-run-output.txt)):
+- [`evidence/test-run-1-return.png`](evidence/test-run-1-return.png) — Scenario 1 (CUST-001 return ORD-27176): Orchestrator → Inventory → Refund → Communication; return approved under the Premium 60-day window.
+- [`evidence/test-run-2-policy.png`](evidence/test-run-2-policy.png) — Scenario 2 (premium return policy): Orchestrator → Policy (3 retrievers in parallel) → Communication.
+- [`evidence/test-run-3-math.png`](evidence/test-run-3-math.png) — Scenario 3 (5 × $29.99, 10% off): Orchestrator → Communication only; total $134.95.
+
 **End-to-end scenarios** (`python src/agent_orchestrator.py test`) — all routed
 exactly as specified, `initialize_session` first and `route_to_communication_agent`
 last in every case:
